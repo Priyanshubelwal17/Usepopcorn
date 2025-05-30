@@ -109,7 +109,6 @@ export default function App() {
 
           setMovies(data.Search);
         } catch (err) {
-          console.error(err.message);
           setError(err.message);
         } finally {
           setIsLoading(false);
@@ -297,7 +296,6 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedId
   )?.userRating;
-  console.log(isWatched);
 
   const {
     Title: title,
@@ -345,6 +343,11 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   useEffect(() => {
     if (!title) return;
     document.title = `Movie | ${title}`;
+
+    return function () {
+      document.title = "usePopcorn";
+      console.log(`Clean up effect for movie ${title}`);
+    };
   }, [title]);
 
   return (
